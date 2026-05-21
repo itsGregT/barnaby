@@ -32,13 +32,13 @@ export function CampaignCard({ campaign, isSelected, onSelect }: Props) {
                         {campaign.status}
                     </Badge>
                 </div>
-                <div className="flex justify-between text-sm-text-slate-400">
+                <div className="flex justify-between text-slate-100">
                     <div className="flex items-center gap-1">
-                        <Users size={14} />
+                        <Users size={20} />
                         {campaign.players}
                     </div>
                     <div className="flex items-center gap-1">
-                        <Sword size={14} />
+                        <Sword size={20} />
                         {campaign.nextSession}
                     </div>
                 </div>

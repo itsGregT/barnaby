@@ -21,7 +21,9 @@ export function CampaignDetails({ campaign }: Props) {
         <div className="space-y-6">
             <Card className="bg-slate-950 border-slate-800">
                 <CardHeader>
-                    <CardTitle className="font-heading text-3xl text-slate-100">{campaign.name}</CardTitle>
+                    <CardTitle className="font-heading text-3xl text-slate-100">
+                        {campaign.name}
+                    </CardTitle>
                 </CardHeader>
                 <CardContent className="text-slate-400">
                     {campaign.description}
