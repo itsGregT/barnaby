@@ -1,2 +1,2 @@
-# barnaby
+# Barnaby
 Warhammer Fantasy TTRPG Sidekick
