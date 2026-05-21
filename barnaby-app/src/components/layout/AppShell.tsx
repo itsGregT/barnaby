@@ -2,7 +2,7 @@ import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
 
 type AppShellProps = {
-	children: React.ReactNode;
+	children?: React.ReactNode;
 };
 
 export function AppShell({ children }: AppShellProps) {
