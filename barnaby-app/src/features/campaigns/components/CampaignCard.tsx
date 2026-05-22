@@ -2,17 +2,18 @@ import { Sword, Users } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Campaign } from '@/src/types/campaign';
+import { getStatusStyles } from "@/src/features/campaigns/utils/getStatusStyles";
 
 type Props = {
     campaign: Campaign;
     isSelected: boolean;
-    onSelect: () => void;
+    onSelect: (id: string) => void;
 }
 
 export function CampaignCard({ campaign, isSelected, onSelect }: Props) {
     return (
         <Card
-            onClick={onSelect}
+            onClick={() => onSelect?.(campaign.id)}
             className={
                 `cursor-pointer transition border
                 ${isSelected 
@@ -28,7 +29,7 @@ export function CampaignCard({ campaign, isSelected, onSelect }: Props) {
                         <p className="text-sm text-slate-400">{campaign.region}</p>
                     </div>
 
-                    <Badge variant="outline" className="text-amber-300 border-amber-400">
+                    <Badge variant="outline" className={getStatusStyles(campaign.status)}>
                         {campaign.status}
                     </Badge>
                 </div>
