@@ -10,7 +10,7 @@ export function CampaignDetails({ campaign }: Props) {
     if (!campaign) {
         return (
             <Card className='bg-slate-950 border-slate-800'>
-                <CardContent className='bg-slate-950 border-slate-800'>
+                <CardContent className='bg-slate-950 border-slate-800 text-slate-100'>
                     Select a campaign to view its ledger
                 </CardContent>
             </Card>
