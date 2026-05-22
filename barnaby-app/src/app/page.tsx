@@ -10,7 +10,6 @@ import  { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateCampaignName } from "@/src/features/campaigns/api/updateCampaign";
 import { Button } from "@/src/components/ui/button";
 
-
 export default function Page() {
     const { data, isLoading, error } = useQuery({
         queryKey: ["campaigns"],
