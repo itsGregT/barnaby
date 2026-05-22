@@ -1,17 +1,34 @@
 "use client";
 
 import { useState } from "react";
-import { campaigns } from "@/src/mock/campaigns";
+//import { campaigns } from "@/src/mock/campaigns";
 import { CampaignList } from "@/src/features/campaigns/components/CampaignList";
 import { CampaignDetails } from "@/src/features/campaigns/components/CampaignDetails";
 import { Campaign } from "@/src/types/campaign";
+import { useQuery } from "@tanstack/react-query";
+import { getCampaigns } from "@/src/features/campaigns/api/getCampaigns";
 
 export default function Page() {
+    const { data, isLoading, error } = useQuery({
+        queryKey: ["campaigns"],
+        queryFn: getCampaigns,
+    });
+
+    const campaigns = data ?? [];
+
 	const [selectedCampaignId, setSelectedCampaignId] = useState<string | null>(campaigns[0]?.id ?? null)
 
 	const selectedCampaign = campaigns.find(
 		(campaign: Campaign) => campaign.id === selectedCampaignId
 	);
+
+    if (isLoading) {
+        return <p className="text-slate-400">Loading campaigns...</p>;
+    }
+
+    if (error) {
+        return <p className="text-red-400">Failed to load campaigns</p>;
+    }
 
 	return (
 		<div className="space-y-8">
