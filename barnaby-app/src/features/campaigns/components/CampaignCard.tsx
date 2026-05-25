@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Campaign } from '@/src/types/campaign';
 import { getStatusStyles } from "@/src/features/campaigns/utils/getStatusStyles";
+import { memo } from "react";
 
 type Props = {
     campaign: Campaign;
@@ -10,7 +11,7 @@ type Props = {
     onSelect: (id: string) => void;
 }
 
-export function CampaignCard({ campaign, isSelected, onSelect }: Props) {
+export const CampaignCard = memo(function CampaignCard({ campaign, isSelected, onSelect }: Props) {
     return (
         <Card
             onClick={() => onSelect?.(campaign.id)}
@@ -47,4 +48,4 @@ export function CampaignCard({ campaign, isSelected, onSelect }: Props) {
         </Card>
     
     )
-}
+})

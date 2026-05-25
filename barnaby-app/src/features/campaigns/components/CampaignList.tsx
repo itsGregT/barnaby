@@ -24,7 +24,7 @@ export function CampaignList({ campaigns, selectedCampaignId, onSelectCampaign }
                         key={campaign.id}
                         campaign={campaign}
                         isSelected={selectedCampaignId === campaign.id}
-                        onSelect={() => onSelectCampaign(campaign.id)}
+                        onSelect={onSelectCampaign}
                     />
                 ))}
             </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { CampaignList } from "@/src/features/campaigns/components/CampaignList";
 import { CampaignDetails } from "@/src/features/campaigns/components/CampaignDetails";
 import { Campaign } from "@/src/types/campaign";
@@ -31,9 +31,13 @@ export default function Page() {
 
 	const [selectedCampaignId, setSelectedCampaignId] = useState<string | null>(campaigns[0]?.id ?? null)
 
-	const selectedCampaign = campaigns.find(
+	const selectedCampaign = useMemo(() => campaigns.find(
 		(campaign: Campaign) => campaign.id === selectedCampaignId
-	);
+	), [campaigns, selectedCampaignId]);
+
+    const handleSelect = useCallback((id: string) => {
+		setSelectedCampaignId(id);
+	}, []);
 
     if (isLoading) {
         return <p className="text-slate-400">Loading campaigns...</p>;
@@ -75,7 +79,7 @@ export default function Page() {
 				<CampaignList 
 					campaigns={campaigns}
 					selectedCampaignId={selectedCampaignId}
-					onSelectCampaign={setSelectedCampaignId}
+					onSelectCampaign={handleSelect}
 				/>
 				<CampaignDetails campaign={selectedCampaign} />
 			</section>
