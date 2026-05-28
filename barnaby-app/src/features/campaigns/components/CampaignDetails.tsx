@@ -3,7 +3,9 @@ import { useState } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import type { Campaign } from "@/types/campaign";
+import type { Campaign } from "@/src/types/campaign";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updateCampaignDesc, updateCampaignName } from "../api/updateCampaign";
 
 type Props = {
 	campaign: Campaign | null;
@@ -14,12 +16,38 @@ type CampaignForm = {
 	description: string;
 };
 
+type UpdateCampaignInfoInput = {
+	id: string;
+	name: string;
+	description: string;
+};
+
 export function CampaignDetails({ campaign }: Props) {
 	const [isEditing, setIsEditing] = useState(false);
+
 	const [form, setForm] = useState<CampaignForm>({
 		name: "",
 		description: "",
 	});
+
+    const updateCampaignInfo = async ({id, name, description} : UpdateCampaignInfoInput) => {
+        await updateCampaignName(id, name);
+
+        await updateCampaignDesc(id, description);
+    };
+
+    const queryClient = useQueryClient();
+
+    const mutation = useMutation({
+        mutationFn: updateCampaignInfo,
+        onSuccess: () => {
+		    queryClient.invalidateQueries({
+                queryKey: ["campaigns"],
+            });
+
+            setIsEditing(false);
+        },
+    })
 
 	if (!campaign) {
 		return (
@@ -48,7 +76,12 @@ export function CampaignDetails({ campaign }: Props) {
 	};
 
 	const handleSave = () => {
-		console.log("save", form);
+        mutation.mutate({
+            id: campaign.id, 
+            name: form.name,
+            description: form.description
+        });
+
 		setIsEditing(false);
 	};
 

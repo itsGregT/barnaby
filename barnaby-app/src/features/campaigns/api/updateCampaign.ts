@@ -14,3 +14,17 @@ export async function updateCampaignName(id: string, newName: string) : Promise<
 
     return campaign;
 }
+
+export async function updateCampaignDesc(id: string, newDesc: string) : Promise<Campaign> {
+    await new Promise((res) => setTimeout(res, 800)); // 
+
+    const campaign = campaigns.find((c) => c.id === id);
+
+    if (!campaign) {
+        throw new Error("Campaign not found");
+    }
+
+    campaign.description = newDesc;
+
+    return campaign;
+}
