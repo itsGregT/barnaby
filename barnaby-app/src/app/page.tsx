@@ -59,17 +59,7 @@ export default function Page() {
 				<p className="mt-2 max-w-4xl text-slate-400">
 					A Game Master control panel for tracking campaigns, characters, sessions, and encounters in the Old World.
 				</p>
-                <Button
-                    onClick={() => { 
-                        mutation.mutate({
-                            id: selectedCampaignId!, 
-                            name: "New Campaign Name"
-                        });
-                    }}
-                    className="mt-4 cursor-pointer bg-cyan-600 hover:bg-cyan-900 transition-colors duration-200"
-                >
-                    {mutation.isPending ? "Updating..." : "Rename Campaign"}
-                </Button>
+                
                 {mutation.error && (
                     <p className="text-red-400">Failed to update campaign</p>
                 )}
