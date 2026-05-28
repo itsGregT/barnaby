@@ -4,8 +4,9 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import type { Campaign } from "@/src/types/campaign";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { updateCampaignDesc, updateCampaignName } from "../api/updateCampaign";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 type Props = {
 	campaign: Campaign | null;
@@ -87,52 +88,66 @@ export function CampaignDetails({ campaign }: Props) {
 
 	return (
 		<div className="space-y-6">
+            {mutation.isPending && (
+                <Dialog open={mutation.isPending}>
+                    <DialogContent showCloseButton={false} className="w-[300px]">Updating Campaign...</DialogContent>
+                </Dialog>
+            )}
+
+            {mutation.error && (
+                <Dialog open={!!mutation.error}>
+                    <DialogContent showCloseButton={true} className="w-[300px]">Update failed! Try again.</DialogContent>
+                </Dialog>
+            )}
+
 			<Card className="bg-slate-950 border-slate-800">
 				<CardHeader>
-					<div className="flex items-center w-full gap-3">
-						{isEditing ? (
-							<input
-								type="text"
-								value={form.name}
-								onChange={(e) =>
-									setForm((prev) => ({
-										...prev,
-										name: e.target.value,
-									}))
-								}
-								className="text-3xl bg-white text-slate-900 border-b border-slate-600 focus:outline-none focus:border-slate-400 px-1"
-							/>
-						) : (
-							<CardTitle className="font-heading text-3xl text-slate-100">
-								{campaign.name}
-							</CardTitle>
-						)}
+                    
+                    
+                        <div className="flex items-center w-full gap-3">
+                            {isEditing ? (
+                                <input
+                                    type="text"
+                                    value={form.name}
+                                    onChange={(e) =>
+                                        setForm((prev) => ({
+                                            ...prev,
+                                            name: e.target.value,
+                                        }))
+                                    }
+                                    className="text-3xl bg-white text-slate-900 border-b border-slate-600 focus:outline-none focus:border-slate-400 px-1"
+                                />
+                            ) : (
+                                <CardTitle className="font-heading text-3xl text-slate-100">
+                                    {campaign.name}
+                                </CardTitle>
+                            )}
 
-						<div className="ml-auto flex items-center gap-1">
-							{isEditing && (
-								<Button
-									variant="ghost"
-									size="icon"
-									className="cursor-pointer text-slate-300 hover:text-white hover:bg-slate-700"
-									onClick={handleCancel}
-									type="button"
-								>
-									<X size={18} />
-								</Button>
-							)}
+                            <div className="ml-auto flex items-center gap-1">
+                                {isEditing && (
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="cursor-pointer text-slate-300 hover:text-white hover:bg-slate-700"
+                                        onClick={handleCancel}
+                                        type="button"
+                                    >
+                                        <X size={18} />
+                                    </Button>
+                                )}
 
-							<Button
-								variant="ghost"
-								size="icon"
-								className="cursor-pointer text-slate-300 hover:text-white hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-50"
-								onClick={isEditing ? handleSave : handleEdit}
-								disabled={isEditing && !isDirty}
-								type="button"
-							>
-								{isEditing ? <Save size={18} /> : <Edit size={18} />}
-							</Button>
-						</div>
-					</div>
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="cursor-pointer text-slate-300 hover:text-white hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-50"
+                                    onClick={isEditing ? handleSave : handleEdit}
+                                    disabled={isEditing && !isDirty}
+                                    type="button"
+                                >
+                                    {isEditing ? <Save size={18} /> : <Edit size={18} />}
+                                </Button>
+                            </div>
+                        </div>					
 				</CardHeader>
 
 				<CardContent className="text-slate-400">
