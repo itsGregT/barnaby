@@ -37,6 +37,13 @@ export function CampaignDetails({ campaign }: Props) {
         await updateCampaignDesc(id, description);
     };
 
+    const updateField = (field: keyof CampaignForm, value: string) => {
+        setForm((prev) => ({
+            ...prev,
+            [field]: value,
+        }));
+    }
+
     const queryClient = useQueryClient();
 
     const mutation = useMutation({
@@ -110,10 +117,7 @@ export function CampaignDetails({ campaign }: Props) {
                                     type="text"
                                     value={form.name}
                                     onChange={(e) =>
-                                        setForm((prev) => ({
-                                            ...prev,
-                                            name: e.target.value,
-                                        }))
+                                        updateField("name", e.target.value)
                                     }
                                     className="text-3xl bg-white text-slate-900 border-b border-slate-600 focus:outline-none focus:border-slate-400 px-1"
                                 />
@@ -155,10 +159,7 @@ export function CampaignDetails({ campaign }: Props) {
 						<textarea
 							value={form.description}
 							onChange={(e) =>
-								setForm((prev) => ({
-									...prev,
-									description: e.target.value,
-								}))
+								updateField("description", e.target.value)
 							}
 							className="w-full text-lg bg-white text-slate-900 border-b border-slate-600 focus:outline-none focus:border-slate-400 px-1 resize-none"
 						/>

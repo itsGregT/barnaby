@@ -27,4 +27,5 @@ export async function updateCampaignDesc(id: string, newDesc: string) : Promise<
     campaign.description = newDesc;
 
     return campaign;
-}
+} 
+
